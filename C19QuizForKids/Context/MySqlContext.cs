@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using C19QuizForKids.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,8 @@ namespace C19QuizForKids.Context
             options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
         }
 
-        //public DbSet<User> Users { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Card> Cards { get; set; }
+        public DbSet<Ranking> Ranking { get; set; }
     }
 }
