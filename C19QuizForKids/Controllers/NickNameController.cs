@@ -1,4 +1,5 @@
 ﻿using C19QuizForKids.Context;
+using C19QuizForKids.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -28,16 +29,11 @@ namespace C19QuizForKids.Controllers
             return View();
         }
 
-        // GET: NickNameController/Create
-        public ActionResult Create(string nickName)
-        {
-            return View();
-        }
+       
 
         // POST: NickNameController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Jogador jogador)
         {
             try
             {
