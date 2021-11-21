@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Cors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +32,19 @@ namespace C19QuizForKids
             services.AddDbContext<MyContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddCors();
+            services.Configure<MvcOptions>(options =>
+            {
+                //options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+                //options.Filters.Add(new CorsAuthorizationFilter("AllowSpecificOrigin"));
+
+                services.AddCors(option => {
+                    option.AddPolicy("AllowAll", policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+                    //option.AddPolicy("AllowSpecificOrigin", policy => policy.WithOrigins("https://localhost:44335/"));
+                    //option.AddPolicy("AllowGetMethod", policy => policy.WithMethods("GET"));
+                });
+            });
+
             services.AddControllers();
             services.AddControllers()
             .AddNewtonsoftJson();
@@ -49,6 +63,8 @@ namespace C19QuizForKids
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "C19QuizForKids v1"));
             }
+
+            app.UseCors("AllowAll");
 
             app.UseHttpsRedirection();
 
