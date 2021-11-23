@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace C19QuizForKids.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class RankingController : Controller
     {
         protected readonly MyContext _context;
@@ -41,7 +42,7 @@ namespace C19QuizForKids.Controllers
         {
             try
             {
-                RankingRepository rankingApplication = new RankingRepository(_context);
+                RankingApplication rankingApplication = new RankingApplication(_context);
                 rankingApplication.Salvar(ranking);
                 return Ok();
             }

@@ -1,12 +1,13 @@
 ﻿using C19QuizForKids.Context;
 using C19QuizForKids.Entities;
+using C19QuizForKids.Repository;
 
 namespace C19QuizForKids.Application
 {
-    public class RankingRepository
+    public class RankingApplication
     {
         protected readonly MyContext _context;
-        public RankingRepository(MyContext context)
+        public RankingApplication(MyContext context)
         {
             _context = context;
         }
