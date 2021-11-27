@@ -1,5 +1,7 @@
 ﻿using C19QuizForKids.Context;
 using C19QuizForKids.Entities;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace C19QuizForKids.Repository
 {
@@ -18,5 +20,11 @@ namespace C19QuizForKids.Repository
                 _context.SaveChanges();
                 return true;
             }
+
+
+        public List<Ranking> BuscarTodos()
+        {
+            return _context.Ranking.ToList();
+        }
     }
 }

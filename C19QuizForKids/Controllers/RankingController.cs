@@ -3,6 +3,7 @@ using C19QuizForKids.Context;
 using C19QuizForKids.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace C19QuizForKids.Controllers
 {
@@ -18,22 +19,19 @@ namespace C19QuizForKids.Controllers
 
 
         // GET: RankingController
-        public ActionResult Index()
+        public ActionResult GetAll()
         {
-            return View();
+            try
+            {
+                return Ok(new RankingApplication(_context).BuscarTodos());
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
-        // GET: RankingController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: RankingController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+      
 
         // POST: RankingController/Create
         [HttpPost]
@@ -52,19 +50,7 @@ namespace C19QuizForKids.Controllers
             }
         }
 
-        // GET: RankingController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
        
-        // GET: RankingController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
 
     }
 }
