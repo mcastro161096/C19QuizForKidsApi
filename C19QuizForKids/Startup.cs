@@ -1,9 +1,6 @@
 using C19QuizForKids.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Cors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,18 +29,25 @@ namespace C19QuizForKids
             services.AddDbContext<MyContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddCors();
-            services.Configure<MvcOptions>(options =>
+            //services.AddCors();
+            services.AddCors(options =>
             {
-                //options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
-                //options.Filters.Add(new CorsAuthorizationFilter("AllowSpecificOrigin"));
-
-                services.AddCors(option => {
-                    option.AddPolicy("AllowAll", policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000/"));
-                    //option.AddPolicy("AllowSpecificOrigin", policy => policy.WithOrigins("https://localhost:44335/"));
-                    //option.AddPolicy("AllowGetMethod", policy => policy.WithMethods("GET"));
-                });
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
             });
+            //services.Configure<MvcOptions>(options =>
+            //{
+            //    //options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            //    //options.Filters.Add(new CorsAuthorizationFilter("AllowSpecificOrigin"));
+
+            //    //services.AddCors(option => {
+            //    //    option.AddPolicy("AllowAll", policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000/"));
+            //        //option.AddPolicy("AllowSpecificOrigin", policy => policy.WithOrigins("https://localhost:44335/"));
+            //        //option.AddPolicy("AllowGetMethod", policy => policy.WithMethods("GET"));
+            //    //});
+            //});
 
             services.AddControllers();
             services.AddControllers()
