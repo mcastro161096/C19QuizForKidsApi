@@ -16,6 +16,7 @@ namespace C19QuizForKids.Context
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Card> Cards { get; set; }
         public DbSet<Ranking> Ranking { get; set; }
+        public DbSet<Jogador> Nickname { get; set; }
     }
 }
 

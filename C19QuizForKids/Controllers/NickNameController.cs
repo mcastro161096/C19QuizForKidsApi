@@ -1,4 +1,5 @@
-﻿using C19QuizForKids.Context;
+﻿using C19QuizForKids.Application;
+using C19QuizForKids.Context;
 using C19QuizForKids.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +10,12 @@ using System.Threading.Tasks;
 
 namespace C19QuizForKids.Controllers
 {
-    public class NickNameController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class NicknameController : Controller
     {
         protected readonly MyContext _context;
-        public NickNameController(MyContext context)
+        public NicknameController(MyContext context)
         {
             _context = context;
         }
@@ -33,15 +36,16 @@ namespace C19QuizForKids.Controllers
 
         // POST: NickNameController/Create
         [HttpPost]
-        public ActionResult Create(Jogador jogador)
+        public ActionResult Create(Jogador nickname)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                NicknameApplication nicknameApplication = new NicknameApplication(_context);
+                return Ok(nicknameApplication.Salvar(nickname));
             }
             catch
             {
-                return View();
+                return BadRequest();
             }
         }
 
@@ -52,19 +56,19 @@ namespace C19QuizForKids.Controllers
         }
 
         // POST: NickNameController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
         // GET: NickNameController/Delete/5
         public ActionResult Delete(int id)
@@ -73,18 +77,18 @@ namespace C19QuizForKids.Controllers
         }
 
         // POST: NickNameController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Delete(int id, IFormCollection collection)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
     }
 }
