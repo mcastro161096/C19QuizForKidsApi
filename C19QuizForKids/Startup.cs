@@ -39,7 +39,7 @@ namespace C19QuizForKids
                 //options.Filters.Add(new CorsAuthorizationFilter("AllowSpecificOrigin"));
 
                 services.AddCors(option => {
-                    option.AddPolicy("AllowAll", policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+                    option.AddPolicy("AllowAll", policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000/"));
                     //option.AddPolicy("AllowSpecificOrigin", policy => policy.WithOrigins("https://localhost:44335/"));
                     //option.AddPolicy("AllowGetMethod", policy => policy.WithMethods("GET"));
                 });
@@ -57,6 +57,7 @@ namespace C19QuizForKids
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -64,11 +65,19 @@ namespace C19QuizForKids
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "C19QuizForKids v1"));
             }
 
-            app.UseCors("AllowAll");
+            
 
-            app.UseHttpsRedirection();
+          
 
             app.UseRouting();
+            //app.UseCors("AllowAll");
+            app.UseCors(c =>
+            {
+                c.AllowAnyHeader();
+                c.AllowAnyMethod();
+                c.AllowAnyOrigin();
+            });
+            app.UseHttpsRedirection();
 
             app.UseAuthorization();
 
