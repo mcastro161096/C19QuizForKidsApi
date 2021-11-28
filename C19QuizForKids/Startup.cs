@@ -30,24 +30,25 @@ namespace C19QuizForKids
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             //services.AddCors();
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy("CorsPolicy",
+            //        builder => builder.AllowAnyOrigin()
+            //            .AllowAnyMethod()
+            //            .AllowAnyHeader().WithOrigins("http://localhost:3000/"));
+            //});
+
+
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader());
+                options.AddPolicy("MyAllowSpecificOrigins",
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:3000")
+                                        .AllowAnyHeader()
+                                        .AllowAnyMethod();
+                });
             });
-            //services.Configure<MvcOptions>(options =>
-            //{
-            //    //options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
-            //    //options.Filters.Add(new CorsAuthorizationFilter("AllowSpecificOrigin"));
-
-            //    //services.AddCors(option => {
-            //    //    option.AddPolicy("AllowAll", policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000/"));
-            //        //option.AddPolicy("AllowSpecificOrigin", policy => policy.WithOrigins("https://localhost:44335/"));
-            //        //option.AddPolicy("AllowGetMethod", policy => policy.WithMethods("GET"));
-            //    //});
-            //});
 
             services.AddControllers();
             services.AddControllers()
@@ -69,18 +70,20 @@ namespace C19QuizForKids
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "C19QuizForKids v1"));
             }
 
-            
 
-          
 
+
+            app.UseCors("MyAllowSpecificOrigins");
             app.UseRouting();
-            //app.UseCors("AllowAll");
-            app.UseCors(c =>
-            {
-                c.AllowAnyHeader();
-                c.AllowAnyMethod();
-                c.AllowAnyOrigin();
-            });
+
+            //app.UseCors(c =>
+            //{
+            //    c.AllowAnyHeader();
+            //    c.AllowAnyMethod();
+            //    c.AllowAnyOrigin();
+            //    c.WithOrigins("http://localhost:3000/");
+            //});
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
